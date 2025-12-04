@@ -1,10 +1,20 @@
 const express = require('express');
 
 const userCtrl = require('../controllers/users');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Récupère une liste d'éléments
+ *     responses:
+ *       200:
+ *         description: Liste des éléments
+ */
+router.get('/', auth, async (req, res) => {
     try {
         const users = await userCtrl.getAll();
         res.status(200).json(users);
